@@ -1,6 +1,9 @@
 
 {% extends "model-page.html" %}
  {% block content %}
+        <a style="color:black" href="evento/">
+            <button type="button">Novo evento</button>
+        </a>
         <h2>{{mensagem}}</h2>
             <ol>
             {% for evento in eventos %}
