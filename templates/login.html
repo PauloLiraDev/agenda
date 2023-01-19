@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
@@ -9,24 +11,28 @@
 </head>
 <body>
     <form action="submit" method="POST">{% csrf_token %}
-        <div class=frame1 align="center">
-            <h1>Login</h1>
+        <div class="box" align="center">
+            <h1>Agenda Online</h1>
+            <h2>Login</h2>
+            <br>
             <label>Usuário</label>
             <br>
-            <input type="text" name="username">
+            <input placeholder="Usuário" type="text" name="username">
             <br>
             <br>
             <label>Senha</label>
             <br>
-            <input type="password" name="password">
+            <input placeholder="Senha" type="password" name="password">
             <br><br>
             <p></p>
-            <button style="color: black; background-color: gray" class="btn" type="submit">Entrar</button>
+            <button class="btn30" type="submit" role="button">Entrar</button>
             <br><br>
-        </div>
-    </form>
+                <center>
     {% for message in messages %}
     <strong>Erro: </strong>{{message}}
     {% endfor %}
+    </center>
+        </div>
+    </form>
 </body>
 </html>

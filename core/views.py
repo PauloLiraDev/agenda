@@ -22,7 +22,7 @@ def submit_login(request):
             login(request, usuario)
             return redirect('/')
         else:
-            messages.error(request, "Credenciais (Usuário e/ou Senha) inválidas.")
+            messages.error(request, "Credenciais inválidas.")
     return redirect('/')
 
 
@@ -36,28 +36,52 @@ def lista_eventos(request):
     usuario = request.user
     evento = Evento.objects.filter(usuario=usuario).order_by('data_evento')
     if not evento.exists():
-        dados = {'mensagem': f'{usuario}, não há agendamentos disponíveis para você.'}
+        dados = {'mensagem': f'{usuario}, não há agendamentos disponíveis para você.', 'usuario': usuario}
         return render(request, 'agenda.html', dados)
     else:
-        dados = {'mensagem': f'Olá, {usuario}. Estes são seus agendamentos:', 'eventos': evento, 'usuario': usuario}
+        dados = {'eventos': evento, 'usuario': usuario}
         return render(request, 'agenda.html', dados)
 
 
 @login_required(login_url='/login/')
 def evento(request):
-    return render(request, 'evento.html')
+    id_evento = request.GET.get('id')
+    dados = {'usuario': request.user}
+    if id_evento:
+        dados['evento'] = Evento.objects.get(id=id_evento)
+    return render(request, 'evento.html', dados)
 
 
 @login_required(login_url='/login/')
 def submit_evento(request):
     if request.POST:
         titulo = request.POST.get('titulo')
-        print(titulo)
+        local = request.POST.get('local')
         data_evento = request.POST.get('data_evento')
-        print(data_evento)
         descricao = request.POST.get('descricao')
-        print(descricao)
+        id_evento = request.POST.get('id_evento')
         usuario = request.user
-        Evento.objects.create(titulo=titulo, data_evento=data_evento, descricao=descricao, usuario=usuario)
+        if id_evento:
+            Evento.objects.filter(id=id_evento)\
+                .update(titulo=titulo,
+                        local=local,
+                        data_evento=data_evento,
+                        descricao=descricao,
+                        usuario=usuario)
+        else:
+            Evento.objects.create(titulo=titulo,
+                                  local=local,
+                                  data_evento=data_evento,
+                                  descricao=descricao,
+                                  usuario=usuario)
 
+    return redirect('/')
+
+
+@login_required(login_url='/login/')
+def delete_evento(request, id_evento):
+    usuario = request.user
+    evento = Evento.objects.get(id=id_evento)
+    if usuario == evento.usuario:
+        evento.delete()
     return redirect('/')

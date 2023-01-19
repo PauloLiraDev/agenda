@@ -9,12 +9,16 @@ class Evento(models.Model):
     data_evento = models.DateTimeField(verbose_name='Data do Evento')
     data_criacao = models.DateTimeField(verbose_name='Data de Criação', auto_now=True)  # Insere a data atual para o banco de dados.
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    local = models.CharField(max_length=70, null=True)
 
     class Meta:
         db_table = 'evento'
 
     def get_data_evento(self):
         return self.data_evento.strftime('%d/%m/%Y %H:%M Hrs')
+
+    def get_date_input(self):
+        return self.data_evento.strftime('%Y-%m-%dT%H:%M')
 
     def __str__(self):
         return self.titulo

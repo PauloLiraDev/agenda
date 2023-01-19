@@ -1,13 +1,48 @@
-
 {% extends "model-page.html" %}
- {% block content %}
-        <a style="color:black" href="evento/">
-            <button type="button">Novo evento</button>
-        </a>
-        <h2>{{mensagem}}</h2>
-            <ol>
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <div class="box" align="center">
+        <p style="color: white">Logado como: {{usuario}}</p>
+        <h1 style="color: white"> Agenda Online </h1>
+        <br>
+        <h3 style="color: white">{{mensagem|linebreaks}}</h3>
+        <center>
+            <a style="text-decoration:none" href="evento/">
+                <button class="btn30" role="button">Novo agendamento<img style="margin:5px" width="20" height="20" src="{% static 'img/add.svg' %}"></button>
+
+            </a>
+            <a style="text-decoration:none" href="/logout">
+                <button class="btn30" role="button">Logout<img style="margin:5px" width="20" height="20" src="{% static 'img/logout.svg' %}"></button>
+            </a>
+        </center>
+            <table class="table-round-corner">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Local</th>
+                        <th>Data</th>
+                        <th style="text-align:center">Ações</th>
+                    </tr>
+                </thead>
             {% for evento in eventos %}
-                <li>{{evento.titulo}} - {{evento.get_data_evento}}</li>
+                    <tbody>
+                      <tr>
+                        <td> {{evento.titulo}} </td>
+                        <td> {{evento.local|default:""}} </td>
+                        <td> {{evento.get_data_evento}} </td>
+                        <td style="text-align:center">
+                            <a style="color:black;padding:5px;text-decoration:none" href="evento/?id={{evento.id}}">
+                                <button class="btn30" role="button"><img style="margin:1px" width="20" height="20" src="{% static 'img/edit.svg' %}"></button>
+                            </a>
+                            <a style="color:black;padding:5px;text-decoration:none" href="evento/delete/{{evento.id}}">
+                                <button class="btn30" role="button"><img style="margin:1px" width="20" height="20" src="{% static 'img/eraser.svg' %}"></button>
+                            </a>
+                        </td>
+                      </tr>
+                    </tbody>
             {% endfor %}
-            </ol>
+            </table>
+                    <br>
+    </div>
  {% endblock %}
