@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <div class="box" align="center">
         <p style="color: white">Logado como: {{usuario}}</p>
-        <h1 style="color: white"> Agenda Online </h1>
+        <h1 style="color: white"> Agenda </h1>
         <br>
         <h3 style="color: white">{{mensagem|linebreaks}}</h3>
         <center>
@@ -16,6 +16,7 @@
                 <button class="btn30" role="button">Logout<img style="margin:5px" width="20" height="20" src="{% static 'img/logout.svg' %}"></button>
             </a>
         </center>
+            {% if status is True%}
             <table class="table-round-corner">
                 <thead>
                     <tr>
@@ -29,8 +30,8 @@
                     <tbody>
                       <tr>
                         <td> {{evento.titulo}} </td>
-                        <td> {{evento.local|default:""}} </td>
-                        <td> {{evento.get_data_evento}} </td>
+                        <td>{{evento.local|default:""}} </td>
+                        <td style="{% if evento.get_evento_atrasado %}color:red{% endif %}"> {{evento.get_data_evento}} </td>
                         <td style="text-align:center">
                             <a style="color:black;padding:5px;text-decoration:none" href="evento/?id={{evento.id}}">
                                 <button class="btn30" role="button"><img style="margin:1px" width="20" height="20" src="{% static 'img/edit.svg' %}"></button>
@@ -43,6 +44,7 @@
                     </tbody>
             {% endfor %}
             </table>
+            {% endif %}
                     <br>
     </div>
  {% endblock %}
