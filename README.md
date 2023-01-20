@@ -1,3 +1,3 @@
 # agenda
  
- Projeto de estudo Django para criação de uma agenda.
+ Projeto pessoal de uma Agenda para praticar HTML, CSS, Django e suas funcionalidades.
