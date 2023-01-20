@@ -6,10 +6,9 @@ p, h1, h2, label{
 color: white;
 }
 body{
-    display: grid;
 	margin-left: 20px;
 	margin-right: 20px;
-	background: linear-gradient(45deg, #18486A, #62D3FD);
+	background: linear-gradient(45deg, #18486A, #599BCA);
 	font-family: sans-serif;
 	font-weight: 100;
 }
@@ -144,19 +143,4 @@ textarea{
     width:220px;
     height:100px;
     background-color: #18486A;
-}
-
-.pagination {
-    margin-bottom: 20px;
-}
-
-.steplinks {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-.steplinks .current{
-    margin-left: 5px;
-    margin-right: 5px;
 }
