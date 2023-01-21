@@ -160,3 +160,16 @@ textarea{
     margin-left: 5px;
     margin-right: 5px;
 }
+.popup{
+  background-color: rgb(44, 169, 188);
+  position: absolute;
+  flex-direction: row;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 1px 5px 8px 1px rgba(0, 0, 0, 20);
+  color: white;
+  display: none;
+}

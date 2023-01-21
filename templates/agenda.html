@@ -1,10 +1,22 @@
 {% extends "model-page.html" %}
 {% block content %}
 {% load static %}
+<style>
+
+</style>
+<script type="text/javascript">
+function show(id) {
+ document.getElementById(id).style.display = 'block';
+  }
+function hide(id) {
+ document.getElementById(id).style.display = 'none';
+  }
+</script>
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <div class="box" align="center">
+
         <p style="color: white">Logado como: {{usuario}}</p>
-        <h1 style="color: white"> Agenda </h1>
+        <h1 style="color: white">Agenda</h1>
         <br>
         <h3 style="color: white">{{mensagem|linebreaks}}</h3>
         <center>
@@ -33,12 +45,30 @@
                         <td>{{evento.local|default:""}} </td>
                         <td style="{% if evento.get_evento_atrasado %}color:red{% endif %}"> {{evento.get_data_evento}} </td>
                         <td style="text-align:center">
-                            <a style="color:black;padding:5px;text-decoration:none" href="evento/?id={{evento.id}}">
-                                <button class="btn30" role="button"><img style="margin:1px" width="20" height="20" src="{% static 'img/edit.svg' %}"></button>
+                            <a style="color:black;text-decoration:none" href="evento/?id={{evento.id}}">
+                                <button class="btn30" role="button">
+                                    <img style="margin:1px" width="20" height="20" src="{% static 'img/edit.svg' %}">
+                                </button>
+
                             </a>
-                            <a style="color:black;padding:5px;text-decoration:none" href="evento/delete/{{evento.id}}">
-                                <button class="btn30" role="button"><img style="margin:1px" width="20" height="20" src="{% static 'img/eraser.svg' %}"></button>
+
+                            <a style="color:black;text-decoration:none" href="javascript: show({{evento.id}});">
+                                <button class="btn30" role="button">
+                                    <img style="margin:1px" width="20" height="20" src="{% static 'img/eraser.svg' %}">
+                                </button><!--href="evento/delete/{{evento.id}}/"--> <!-- Clicar na borracha -->
                             </a>
+                    <div id="{{evento.id}}" class="popup" align="center">
+                        <p>Deseja excluir o agendamento da data {{evento.get_data_evento}}?</p>
+                              <div align="center" style="justify-content:center;display:flex;flex-direction:row">
+                                  <a style= "text-decoration:none" href="evento/delete/{{evento.id}}/">
+                                      <button style="color:#FE7272;margin: 3px" class="btn30">Confirmar</button>
+                                  </a>
+                                  <a href="javascript: hide({{evento.id}});">
+                                      <button style="margin:3px" class="btn30">Cancelar</button>
+                                  </a>
+                              </div>
+                    </div>
+
                         </td>
                       </tr>
                     </tbody>
@@ -51,7 +81,7 @@
                     {% if eventos.has_previous %}
                     <a href="?page={{eventos.previous_page_number}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffffff" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                         </svg>
                     </a>
                     {% endif %}

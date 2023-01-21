@@ -5,10 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http.response import Http404, JsonResponse
+from django.core.paginator import Paginator
 # Create your views here.
-
-# def index(request):
-#     return redirect('/agenda/')
 
 
 def login_user(request):
@@ -36,13 +34,16 @@ def logout_user(request):
 @login_required(login_url='/login/')
 def lista_eventos(request):
     usuario = request.user
-    evento = Evento.objects.filter(usuario=usuario).order_by('data_evento')
-    if not evento.exists():
+    evento_list = Evento.objects.filter(usuario=usuario).order_by('data_evento')
+    if not evento_list.exists():
         dados = {'usuario': usuario,
                  'status': False,  # status serve para ocultar ou expor a tabela no html.
                  'mensagem': f'{usuario}, não há agendamentos disponíveis para você.'}
         return render(request, 'agenda.html', dados)
     else:
+        paginator = Paginator(evento_list, 5)
+        page = request.GET.get('page')
+        evento = paginator.get_page(page)
         dados = {'status': True, 'eventos': evento, 'usuario': usuario}
         return render(request, 'agenda.html', dados)
 
@@ -88,7 +89,7 @@ def submit_evento(request):
                                       usuario=usuario)
                 return redirect('/')
             except django.core.exceptions.ValidationError:
-                dados['error'] = 'Campo obrigatório.'
+                dados['error'] = 'Campo obrigatório'
                 dados['evento'] = {"titulo": titulo, "local": local, "descricao": descricao}
                 return render(request, 'evento.html', dados)
     return redirect('/')
