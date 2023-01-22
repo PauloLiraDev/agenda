@@ -64,7 +64,6 @@ def submit_evento(request):
         titulo = request.POST.get('titulo')
         local = request.POST.get('local')
         data_evento = request.POST.get('data_evento')
-        descricao = request.POST.get('descricao')
         id_evento = request.POST.get('id_evento')
         usuario = request.user
         if id_evento:  # Se for uma edição
@@ -73,7 +72,6 @@ def submit_evento(request):
                     .update(titulo=titulo,
                             local=local,
                             data_evento=data_evento,
-                            descricao=descricao,
                             usuario=usuario)
                 return redirect('/')
             except django.core.exceptions.ValidationError:
@@ -85,12 +83,11 @@ def submit_evento(request):
                 Evento.objects.create(titulo=titulo,
                                       local=local,
                                       data_evento=data_evento,
-                                      descricao=descricao,
                                       usuario=usuario)
                 return redirect('/')
             except django.core.exceptions.ValidationError:
                 dados['error'] = 'Campo obrigatório'
-                dados['evento'] = {"titulo": titulo, "local": local, "descricao": descricao}
+                dados['evento'] = {"titulo": titulo, "local": local}
                 return render(request, 'evento.html', dados)
     return redirect('/')
 
@@ -111,6 +108,6 @@ def delete_evento(request, id_evento):
 @login_required(login_url='/login/')
 def json_api(request):
     usuario = request.user
-    evento = Evento.objects.filter(usuario=usuario).values("data_criacao", "data_evento", "descricao",
+    evento = Evento.objects.filter(usuario=usuario).values("data_criacao", "data_evento",
                                                            "id", "local", "titulo", "usuario", "usuario_id")
     return JsonResponse(list(evento), safe=False)
