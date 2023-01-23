@@ -1,9 +1,8 @@
 {% extends "model-page.html" %}
 {% block content %}
 {% load static %}
-<style>
 
-</style>
+
 <script type="text/javascript">
 function show(id) {
  document.getElementById(id).style.display = 'block';
@@ -14,9 +13,8 @@ function hide(id) {
 </script>
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <div class="box" align="center">
-
         <p style="color: white">Logado como: {{usuario}}</p>
-        <h1 style="color: white">Agenda</h1>
+        <h1 style="color:#62D3FD;font-family: 'Bellona', sans-serif;" align=center>Agenda</h1>
         <br>
         <h3 style="color: white">{{mensagem|linebreaks}}</h3>
         <center>

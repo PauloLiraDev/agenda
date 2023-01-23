@@ -4,8 +4,9 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <div class="box">
         <form action="submit" method="POST"> {% csrf_token %}
-            <h1 align="center" style="color: white"> Agenda </h1>
-            <h3>Evento</h3>
+            <h1 style="color:#62D3FD;font-family: 'Bellona', sans-serif;" align=center>Agenda</h1>
+                <h3 align="center">Novo agendamento</h3>
+                <br>
                 <label>Título</label>
                 <input type="number" name="id_evento" value="{{evento.id}}" hidden>
                 <br>
