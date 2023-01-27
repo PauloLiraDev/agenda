@@ -6,3 +6,5 @@ core/__pycache__/views.cpython-311.pyc
 agenda/__pycache__/settings.cpython-311.pyc
 agenda/__pycache__/urls.cpython-311.pyc
 .vscode/launch.json
+dev_django/Lib/site-packages/bs4/builder/__init__.py
+dev_django/
